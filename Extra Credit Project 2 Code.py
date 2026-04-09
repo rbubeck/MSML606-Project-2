@@ -47,6 +47,17 @@ def dijkstra(df,origin,destination):
                 path[neighbor] = current_node
                 heapq.heappush(pq, (distance,neighbor))
 
-    return
+    # Reconstruct path
+    final_path = []
+    node = origin
+    if dist[origin] != float('inf'):
+        while node is not None:
+            final_path.append(node)
+            node = path[node]
+        final_path.reverse()
 
-dijkstra(cities_df,origin_city,destination_city)
+    return dist[origin], final_path
+
+distance, path = dijkstra(cities_df,origin_city,destination_city)
+print(f"Total Distance from {origin_city} to {destination_city}: {distance}")
+print(f"Path from {origin_city} to {destination_city}: {path}")

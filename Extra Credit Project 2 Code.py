@@ -7,7 +7,7 @@ cities_df = pd.read_csv('Cities Graph Dataset.csv')
 
 # Pick origin and destination cities to calculate shortest path
 origin_city = 'City1'
-destination_city = 'City100'
+destination_city = 'City5'
 
 # Dijkstra's Algorithm Function
 def dijkstra(df,origin,destination):
@@ -49,14 +49,15 @@ def dijkstra(df,origin,destination):
 
     # Reconstruct path
     final_path = []
-    node = origin
-    if dist[origin] != float('inf'):
-        while node is not None:
-            final_path.append(node)
-            node = path[node]
-        final_path.reverse()
+    node = destination
+    if dist[destination] == float('inf'):
+        return float('inf'), []
+    while node is not None:
+        final_path.append(node)
+        node = path[node]
+    final_path.reverse()
 
-    return dist[origin], final_path
+    return dist[destination], final_path
 
 distance, path = dijkstra(cities_df,origin_city,destination_city)
 print(f"Total Distance from {origin_city} to {destination_city}: {distance}")

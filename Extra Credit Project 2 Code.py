@@ -26,7 +26,21 @@ def dijkstra(df,origin,destination):
     # Distance Dictionary
     dist = {node: float('inf') for node in graph}
     dist[origin] = 0
-    print(dist)
+
+    # Keep track of path
+    path = {node: None for node in graph}
+
+    while pq:
+
+        current_dist, current_node = heapq.heappop(pq)
+
+        if current_node == destination:
+            break
+
+        if current_dist > dist[current_node]:
+            continue
+
+
 
     return
 

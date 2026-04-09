@@ -6,8 +6,8 @@ import heapq
 cities_df = pd.read_csv('Cities Graph Dataset.csv')
 
 # Pick origin and destination cities to calculate shortest path
-origin_city = 'City1'
-destination_city = 'City5'
+origin_city = input('Select an origin city (City#): ')
+destination_city = input('Select an destination city (City#): ')
 
 # Dijkstra's Algorithm Function
 def dijkstra(df,origin,destination):
@@ -60,5 +60,5 @@ def dijkstra(df,origin,destination):
     return dist[destination], final_path
 
 distance, path = dijkstra(cities_df,origin_city,destination_city)
-print(f"Total Distance from {origin_city} to {destination_city}: {distance}")
+print(f"Shortest Distance from {origin_city} to {destination_city}: {distance}")
 print(f"Path from {origin_city} to {destination_city}: {path}")

@@ -40,7 +40,12 @@ def dijkstra(df,origin,destination):
         if current_dist > dist[current_node]:
             continue
 
-
+        for neighbor, weight in graph.get(current_node,[]):
+            distance = current_dist + weight
+            if distance < dist.get(neighbor,float('inf')):
+                dist[neighbor] = distance
+                path[neighbor] = current_node
+                heapq.heappush(pq, (distance,neighbor))
 
     return
 

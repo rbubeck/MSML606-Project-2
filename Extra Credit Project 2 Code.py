@@ -20,7 +20,13 @@ def dijkstra(df,origin,destination):
         graph.setdefault(u,[]).append((v,w))
         graph.setdefault(v,[]).append((u,w))
 
-    print(graph)
+    # Priority Queue
+    pq = [(0,origin)]
+
+    # Distance Dictionary
+    dist = {node: float('inf') for node in graph}
+    dist[origin] = 0
+    print(dist)
 
     return
 

@@ -67,6 +67,9 @@ else:
 
         return dist[destination], final_path
 
-distance, path = dijkstra(cities_df,origin_city,destination_city)
-print(f"Shortest Distance from {origin_city} to {destination_city}: {distance}")
-print(f"Path from {origin_city} to {destination_city}: {path}")
+    distance, path = dijkstra(cities_df,origin_city,destination_city)
+    if distance == float('inf'):
+        print(f"No path found from {origin_city} to {destination_city}")
+    else:
+        print(f"Shortest Distance from {origin_city} to {destination_city}: {distance}")
+        print(f"Path from {origin_city} to {destination_city}: {path}")

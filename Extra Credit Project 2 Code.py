@@ -5,7 +5,7 @@ import heapq
 
 cities_df = pd.read_csv('Cities Graph Dataset.csv')
 
-# Pick origin and destination cities to calculate shortest path
+# Pick origin and destination cities
 origin_city = input('Select an origin city (City#): ')
 destination_city = input('Select an destination city (City#): ')
 

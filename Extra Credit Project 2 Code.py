@@ -9,55 +9,63 @@ cities_df = pd.read_csv('Cities Graph Dataset.csv')
 origin_city = input('Select an origin city (City#): ')
 destination_city = input('Select an destination city (City#): ')
 
-# Dijkstra's Algorithm Function
-def dijkstra(df,origin,destination):
+# Get all unique cities from the DataFrame
+all_cities = pd.concat([cities_df['From'], cities_df['To']]).unique()
 
-    # Build graph from cities dataframe
-    graph = {}
+if origin_city not in all_cities or destination_city not in all_cities:
+    print("Error: Invalid City")
 
-    for _, row in df.iterrows():
-        u,v,w = row['From'],row['To'],row['Distance']
-        graph.setdefault(u,[]).append((v,w))
-        graph.setdefault(v,[]).append((u,w))
+else:
 
-    # Priority Queue
-    pq = [(0,origin)]
+    # Dijkstra's Algorithm Function
+    def dijkstra(df,origin,destination):
 
-    # Distance Dictionary
-    dist = {node: float('inf') for node in graph}
-    dist[origin] = 0
+        # Build graph from cities dataframe
+        graph = {}
 
-    # Keep track of path
-    path = {node: None for node in graph}
+        for _, row in df.iterrows():
+            u,v,w = row['From'],row['To'],row['Distance']
+            graph.setdefault(u,[]).append((v,w))
+            graph.setdefault(v,[]).append((u,w))
 
-    while pq:
+        # Priority Queue
+        pq = [(0,origin)]
 
-        current_dist, current_node = heapq.heappop(pq)
+        # Distance Dictionary
+        dist = {node: float('inf') for node in graph}
+        dist[origin] = 0
 
-        if current_node == destination:
-            break
+        # Keep track of path
+        path = {node: None for node in graph}
 
-        if current_dist > dist[current_node]:
-            continue
+        while pq:
 
-        for neighbor, weight in graph.get(current_node,[]):
-            distance = current_dist + weight
-            if distance < dist.get(neighbor,float('inf')):
-                dist[neighbor] = distance
-                path[neighbor] = current_node
-                heapq.heappush(pq, (distance,neighbor))
+            current_dist, current_node = heapq.heappop(pq)
 
-    # Reconstruct path
-    final_path = []
-    node = destination
-    if dist[destination] == float('inf'):
-        return float('inf'), []
-    while node is not None:
-        final_path.append(node)
-        node = path[node]
-    final_path.reverse()
+            if current_node == destination:
+                break
 
-    return dist[destination], final_path
+            if current_dist > dist[current_node]:
+                continue
+
+            for neighbor, weight in graph.get(current_node,[]):
+                distance = current_dist + weight
+                if distance < dist.get(neighbor,float('inf')):
+                    dist[neighbor] = distance
+                    path[neighbor] = current_node
+                    heapq.heappush(pq, (distance,neighbor))
+
+        # Reconstruct path
+        final_path = []
+        node = destination
+        if dist[destination] == float('inf'):
+            return float('inf'), []
+        while node is not None:
+            final_path.append(node)
+            node = path[node]
+        final_path.reverse()
+
+        return dist[destination], final_path
 
 distance, path = dijkstra(cities_df,origin_city,destination_city)
 print(f"Shortest Distance from {origin_city} to {destination_city}: {distance}")

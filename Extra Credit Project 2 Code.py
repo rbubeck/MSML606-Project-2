@@ -1,4 +1,5 @@
 # MSML 606 Extra Credit Project 2 Code: Single-Pair Shortest Path Problem using Dijkstra's Algorithm
+# AI Statement: Used AI to learn dijkstra's algorithm
 
 import pandas as pd
 import heapq
